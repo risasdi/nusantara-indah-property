@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hasil pencarian properti Nusantara Indah Property.">
+    <title>Hasil Pencarian | Nusantara Indah Property</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .results-page { min-height: 100vh; background: var(--off-white); }
+        .results-header { background: var(--green); color: var(--white); padding: 34px 24px 46px; }
+        .results-heading { width: min(1200px, 100%); margin: 0 auto; }
+        .results-heading span { color: var(--gold-soft); font-size: .74rem; font-weight: 700; letter-spacing: .22em; }
+        .results-heading h1 { margin-top: 12px; font-size: clamp(2rem, 4vw, 3.8rem); line-height: 1.1; }
+        .results-summary { margin-top: 14px; color: rgba(255,255,255,.75); }
+        .results-main { width: min(1200px, calc(100% - 48px)); margin: 0 auto; padding: 48px 0 80px; }
+        .results-filter { display: flex; flex-wrap: wrap; gap: 10px 24px; margin-bottom: 30px; color: var(--gray); font-size: .88rem; }
+        .results-filter strong { color: var(--green); }
+        .results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 28px; }
+        .results-card { overflow: hidden; background: var(--white); border-radius: 18px; box-shadow: 0 16px 36px rgba(17,17,17,.06); }
+        .results-card img { width: 100%; height: 220px; object-fit: cover; }
+        .results-card-body { padding: 22px; }
+        .results-card h2 { color: var(--green); font-size: 1.35rem; margin-bottom: 8px; }
+        .results-card p { color: var(--gray); font-size: .9rem; }
+        .results-card .result-price { margin: 18px 0; color: var(--green); font: 700 1.25rem 'Cinzel', serif; }
+        .result-specs { display: flex; flex-wrap: wrap; gap: 8px 12px; padding: 14px 0; border-top: 1px solid #edf0ef; border-bottom: 1px solid #edf0ef; color: #4d4d4d; font-size: .78rem; }
+        .result-link { display: inline-flex; margin-top: 18px; padding: 12px 18px; border-radius: var(--control-radius); background: var(--green); color: var(--white); font-size: .84rem; font-weight: 700; }
+        .empty-result { padding: 34px; background: var(--white); border-radius: 18px; color: var(--gray); text-align: center; }
+        @media (max-width: 620px) { .results-header { padding: 24px 20px 36px; } .results-main { width: min(100% - 40px, 520px); padding-top: 32px; } }
+    </style>
+</head>
+<body class="results-page">
+    <nav class="navbar" aria-label="Navigasi halaman hasil pencarian">
+        <div class="logo-container">
+            <a href="index.html" class="nav-logo-link" aria-label="Kembali ke halaman utama"><img src="images/logo/logo-06.png" alt="Nusantara Indah Property" class="nav-logo"></a>
+        </div>
+        <div class="nav-menu">
+            <ul class="nav-links">
+                <li><a href="index.html#home">Beranda</a></li>
+                <li><a href="index.html#catalog">Properti</a></li>
+                <li><a href="index.html#about">Tentang Kami</a></li>
+                <li><a href="index.html#contact" class="nav-cta">Hubungi Agen</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="results-header">
+        <div class="results-heading">
+            <span>HASIL PENCARIAN</span>
+            <h1>Temukan properti yang sesuai.</h1>
+            <p class="results-summary" id="results-summary">Menyiapkan hasil pencarian...</p>
+        </div>
+    </header>
+
+    <main class="results-main">
+        <div class="results-filter" id="results-filter"></div>
+        <div class="results-grid" id="results-grid"></div>
+    </main>
+
+    <script>
+        const properties = [
+            {
+                name: 'Cluster Sukamukti Islamic - Tipe 36',
+                project: 'Cluster Sukamukti Islamic',
+                location: 'Katapang, Bandung, Jawa Barat',
+                price: 400000000,
+                priceLabel: 'Rp 400 Juta-an',
+                specs: ['2 Kamar', '1 Kamar Mandi', 'Tipe 36'],
+                image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80',
+                link: 'cluster-sukamukti-islamic-tipe-36.html'
+            },
+            {
+                name: 'Cluster Sukamukti Islamic - Tipe 45',
+                project: 'Cluster Sukamukti Islamic',
+                location: 'Katapang, Bandung, Jawa Barat',
+                price: 500000000,
+                priceLabel: 'Rp 500 Juta-an',
+                specs: ['2 Kamar', '1 Kamar Mandi', 'Tipe 45'],
+                image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80',
+                link: 'cluster-sukamukti-islamic-tipe-45.html'
+            },
+            {
+                name: 'Villa Resik',
+                project: 'Villa Resik',
+                location: 'Buahbatu, Bandung, Jawa Barat',
+                price: 600000000,
+                priceLabel: 'Rp 600 Juta-an',
+                specs: ['2 Kamar', '2 Kamar Mandi', 'Tipe 60'],
+                image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80',
+                link: 'villa-resik.html'
+            },
+            {
+                name: 'Taman Indah Katapang',
+                project: 'Taman Indah Katapang',
+                location: 'Katapang, Bandung, Jawa Barat',
+                price: 700000000,
+                priceLabel: 'Rp 700 Juta-an',
+                specs: ['2 Kamar', '2 Kamar Mandi', 'Tipe 70'],
+                image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80',
+                link: 'taman-indah-katapang.html'
+            }
+        ];
+
+        const params = new URLSearchParams(window.location.search);
+        const locationQuery = (params.get('location') || '').trim();
+        const propertyType = params.get('propertyType') || 'Semua Properti';
+        const maxPriceParam = params.get('maxPrice');
+        const parsedMaxPrice = Number(maxPriceParam);
+        const maxPrice = maxPriceParam !== null && Number.isFinite(parsedMaxPrice) ? parsedMaxPrice : 1000000000;
+        const formatRupiah = (value) => new Intl.NumberFormat('id-ID', {
+            style: 'currency', currency: 'IDR', maximumFractionDigits: 0
+        }).format(value);
+
+        const matchesLocation = (property) => !locationQuery || property.location.toLowerCase().includes(locationQuery.toLowerCase());
+        const matchesPropertyType = (property) => propertyType === 'Semua Properti' || property.project === propertyType;
+        const filteredProperties = properties.filter((property) => matchesLocation(property) && matchesPropertyType(property) && property.price <= maxPrice);
+
+        document.getElementById('results-summary').textContent = `${filteredProperties.length} properti ditemukan sesuai pilihan Anda.`;
+        const resultsFilter = document.getElementById('results-filter');
+        resultsFilter.textContent = `Lokasi: ${locationQuery || 'Semua lokasi'} | Tipe: ${propertyType} | Maksimal harga: ${formatRupiah(maxPrice)}+`;
+
+        const resultsGrid = document.getElementById('results-grid');
+        if (!filteredProperties.length) {
+            const emptyResult = document.createElement('div');
+            emptyResult.className = 'empty-result';
+            emptyResult.textContent = 'Belum ada properti yang sesuai dengan lokasi, tipe, dan batas harga tersebut. Silakan ubah pilihan pencarian Anda.';
+            resultsGrid.appendChild(emptyResult);
+        } else {
+            filteredProperties.forEach((property) => {
+                const card = document.createElement('article');
+                card.className = 'results-card';
+
+                const image = document.createElement('img');
+                image.src = property.image;
+                image.alt = property.name;
+
+                const body = document.createElement('div');
+                body.className = 'results-card-body';
+
+                const name = document.createElement('h2');
+                name.textContent = property.name;
+                const location = document.createElement('p');
+                location.textContent = property.location;
+                const price = document.createElement('div');
+                price.className = 'result-price';
+                price.textContent = property.priceLabel;
+                const specs = document.createElement('div');
+                specs.className = 'result-specs';
+                property.specs.forEach((spec) => {
+                    const specItem = document.createElement('span');
+                    specItem.textContent = spec;
+                    specs.appendChild(specItem);
+                });
+                const link = document.createElement('a');
+                link.className = 'result-link';
+                link.href = property.link;
+                link.textContent = 'Lihat Detail';
+
+                body.append(name, location, price, specs, link);
+                card.append(image, body);
+                resultsGrid.appendChild(card);
+            });
+        }
+    </script>
+</body>
+</html>

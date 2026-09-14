@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pilih tipe rumah di Cluster Sukamukti Islamic.">
+    <title>Pilih Tipe Rumah | Cluster Sukamukti Islamic</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .cluster-choice-page { min-height: 100vh; background: #f4f6f5; }
+        .choice-main { width: min(1120px, calc(100% - 40px)); margin: 0 auto; padding: 70px 0 90px; }
+        .choice-heading { max-width: 720px; margin-bottom: 42px; }
+        .choice-label { color: #c8a15a; font-size: .74rem; font-weight: 700; letter-spacing: .22em; }
+        .choice-heading h1 { margin: 14px 0; color: #063d36; font-size: clamp(2.1rem, 4vw, 4rem); line-height: 1.1; }
+        .choice-heading p { color: #666; line-height: 1.8; }
+        .choice-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+        .choice-card { overflow: hidden; background: #fff; border-radius: 18px; color: inherit; box-shadow: 0 16px 36px rgba(17,17,17,.06); transition: transform .25s ease, box-shadow .25s ease; }
+        .choice-card:hover, .choice-card:focus-visible { transform: translateY(-6px); box-shadow: 0 24px 42px rgba(17,17,17,.12); }
+        .choice-card img { display: block; width: 100%; height: 280px; object-fit: cover; }
+        .choice-card-body { padding: 24px; }
+        .choice-card-body h2 { margin-bottom: 8px; color: #063d36; font-size: 1.55rem; }
+        .choice-card-body p { margin-bottom: 18px; color: #666; line-height: 1.7; }
+        .choice-price { margin-bottom: 18px; color: #063d36; font: 700 1.35rem 'Cinzel', serif; }
+        .choice-specs { display: flex; flex-wrap: wrap; gap: 10px 14px; padding-top: 16px; border-top: 1px solid #edf0ef; color: #4d4d4d; font-size: .8rem; }
+        .choice-link { display: inline-flex; margin-top: 22px; padding: 13px 20px; border-radius: 12px; background: #063d36; color: #fff; font-weight: 700; }
+        @media (max-width: 760px) { .choice-main { padding-top: 42px; } .choice-grid { grid-template-columns: 1fr; } .choice-card img { height: 230px; } }
+    </style>
+</head>
+<body class="cluster-choice-page">
+    <nav class="navbar">
+        <div class="logo-container">
+            <a href="index.html" class="nav-logo-link" aria-label="Kembali ke halaman utama"><img src="images/logo/logo-06.png" alt="Nusantara Indah Property" class="nav-logo"></a>
+        </div>
+        <div class="nav-menu">
+            <ul class="nav-links">
+                <li><a href="index.html#home">Beranda</a></li>
+                <li><a href="index.html#catalog">Properti</a></li>
+                <li><a href="index.html#about">Tentang Kami</a></li>
+                <li><a href="index.html#contact" class="nav-cta">Hubungi Agen</a></li>
+            </ul>
+        </div>
+    </nav>
+    <main class="choice-main">
+        <div class="choice-heading">
+            <span class="choice-label">CLUSTER SUKAMUKTI ISLAMIC</span>
+            <h1>Pilih tipe rumah yang sesuai untuk keluarga Anda.</h1>
+            <p>Cluster Sukamukti Islamic memiliki dua pilihan tipe rumah dengan karakter ruang dan kebutuhan yang berbeda. Pilih salah satu untuk melihat galeri dan detail lengkapnya.</p>
+        </div>
+        <div class="choice-grid">
+            <a class="choice-card" href="cluster-sukamukti-islamic-tipe-36.html">
+                <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1000&q=85" alt="Cluster Sukamukti Islamic Tipe 36">
+                <div class="choice-card-body">
+                    <h2>Tipe 36</h2>
+                    <p>Hunian ringkas dan nyaman untuk keluarga yang mengutamakan efisiensi ruang.</p>
+                    <div class="choice-price">Mulai Rp 400 Juta-an</div>
+                    <div class="choice-specs"><span>2 Kamar</span><span>1 Kamar Mandi</span><span>Luas Tipe 36</span></div>
+                    <span class="choice-link">Lihat Detail Tipe 36</span>
+                </div>
+            </a>
+            <a class="choice-card" href="cluster-sukamukti-islamic-tipe-45.html">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=85" alt="Cluster Sukamukti Islamic Tipe 45">
+                <div class="choice-card-body">
+                    <h2>Tipe 45</h2>
+                    <p>Hunian nyaman dengan ruang keluarga yang lebih lapang untuk aktivitas harian.</p>
+                    <div class="choice-price">Mulai Rp 500 Juta-an</div>
+                    <div class="choice-specs"><span>2 Kamar</span><span>1 Kamar Mandi</span><span>Luas Tipe 45</span></div>
+                    <span class="choice-link">Lihat Detail Tipe 45</span>
+                </div>
+            </a>
+        </div>
+    </main>
+</body>
+</html>

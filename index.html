@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nusantara Indah Property menyediakan hunian premium, vila, dan properti investasi yang elegan dan strategis.">
+    <title>Nusantara Indah Property</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo-container">
+            <a href="index.html" class="nav-logo-link" aria-label="Kembali ke halaman utama">
+                <img src="images/logo/logo-06.png" alt="Nusantara Indah Property" class="nav-logo" onerror="this.style.display='none'; document.getElementById('fallback-logo').style.display='inline-block';">
+            </a>
+            <span id="fallback-logo" class="fallback-logo">NUSANTARA INDAH</span>
+        </div>
+
+        <div class="nav-menu">
+            <ul class="nav-links">
+                <li><a href="#home">Beranda</a></li>
+                <li><a href="#catalog">Properti</a></li>
+                <li><a href="#about">Tentang Kami</a></li>
+                <li><a href="#contact" class="nav-cta">Hubungi Agen</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header id="home" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-inner">
+            <div class="hero-content">
+                <span class="hero-subtitle">TEMUKAN RUANG IDEAL ANDA</span>
+                <h1>Dimana hidup yang elegan dimulai.</h1>
+                <p>Jelajahi hunian premium dan properti investasi terbaik yang dirancang untuk gaya hidup mewah dan kenyamanan modern.</p>
+                <div class="hero-actions">
+                    <a href="#catalog" class="btn-primary">Lihat Properti</a>
+                    <a href="#contact" class="btn-secondary">Booking Kunjungan</a>
+                </div>
+            </div>
+
+            <a class="hero-panel" href="cluster-sukamukti-islamic.html" aria-label="Lihat detail Cluster Sukamukti Islamic">
+                <span class="panel-label">Koleksi Unggulan</span>
+                <strong>Cluster Sukamukti Islamic</strong>
+                <small>Mulai dari Rp 400 Juta</small>
+            </a>
+        </div>
+    </header>
+
+    <div class="search-container">
+        <form class="search-box" action="search.html" method="get" aria-label="Form pencarian properti">
+            <div class="search-item">
+                <label for="location">Lokasi</label>
+                <input id="location" name="location" type="text" placeholder="Masukkan lokasi">
+            </div>
+
+            <div class="search-item">
+                <label for="propertyType">Tipe Properti</label>
+                <select id="propertyType" name="propertyType">
+                    <option value="Semua Properti">Semua Properti</option>
+                    <option value="Cluster Sukamukti Islamic">Cluster Sukamukti Islamic</option>
+                    <option value="Villa Resik">Villa Resik</option>
+                    <option value="Taman Indah Katapang">Taman Indah Katapang</option>
+                </select>
+            </div>
+
+            <div class="search-item price-slider-container">
+                <div class="price-header">
+                    <label for="priceRange">Rentang Harga</label>
+                    <span id="price-output">Rp 0 - Rp 1.000.000.000+</span>
+                </div>
+                <input type="range" id="priceRange" name="maxPrice" min="0" max="1000000000" step="50000000" value="1000000000" class="slider">
+            </div>
+
+            <button type="submit" class="btn-search">Cari Properti</button>
+        </form>
+    </div>
+
+    <section id="about" class="about-section">
+        <div class="about-content">
+            <div class="about-copy">
+                <span class="section-tag">TENTANG KAMI</span>
+                <h2>Mitra properti yang dapat dipercaya untuk masa depan yang lebih berarti.</h2>
+                <p>Nusantara Indah Property membantu keluarga dan investor menemukan rumah yang sesuai dengan visi, nilai, dan gaya hidup mereka. Dengan portofolio yang terkurasi dan bimbingan personal, setiap keputusan properti terasa lebih percaya diri dan mudah.</p>
+            </div>
+            <div class="about-points">
+                <div>
+                    <strong>Properti Terpilih</strong>
+                    <p>Rumah premium yang dipilih berdasarkan gaya, nilai, dan potensi jangka panjang.</p>
+                </div>
+                <div>
+                    <strong>Panduan Ahli</strong>
+                    <p>Konsultasi yang terarah mulai dari pemilihan lokasi hingga proses closing.</p>
+                </div>
+                <div>
+                    <strong>Layanan Terpercaya</strong>
+                    <p>Proses yang transparan, agen responsif, dan komunikasi yang jelas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="catalog" class="listings-section">
+        <div class="section-header">
+            <h3>TEMUKAN PILIHAN KAMI</h3>
+            <h2>Properti Unggulan</h2>
+        </div>
+
+        <div class="property-grid">
+            <a class="property-card-link" href="cluster-sukamukti-islamic.html" aria-label="Lihat detail Cluster Sukamukti Islamic">
+                <article class="property-card">
+                <div class="card-img-wrapper">
+                    <span class="badge sale">DIJUAL</span>
+                    <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80" alt="Modern luxury villa">
+                </div>
+                <div class="card-body">
+                    <h4>Cluster Sukamukti Islamic</h4>
+                    <p class="location">Katapang, Bandung, Jawa Barat</p>
+                    <div class="facilities">
+                        <span>🛏️ 2 Kamar</span>
+                        <span>🛁 1 Kamar Mandi</span>
+                        <span>📐 Tipe 36 &amp; 45</span>
+                    </div>
+                    <div class="price">Mulai Rp 400 Juta-an</div>
+                    </div>
+                </article>
+            </a>
+
+            <a class="property-card-link" href="villa-resik.html" aria-label="Lihat detail Villa Resik">
+                <article class="property-card">
+                <div class="card-img-wrapper">
+                    <span class="badge rent">TERJUAL</span>
+                    <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80" alt="Luxury penthouse residence">
+                </div>
+                <div class="card-body">
+                    <h4>Villa Resik</h4>
+                    <p class="location">Buahbatu, Bandung, Jawa Barat</p>
+                    <div class="facilities">
+                        <span>🛏️ 2 Kamar</span>
+                        <span>🛁 2 Kamar Mandi</span>
+                        <span>📐 Tipe 60</span>
+                    </div>
+                    <div class="price">Rp 600 Juta-an</div>
+                    </div>
+                </article>
+            </a>
+
+            <a class="property-card-link" href="taman-indah-katapang.html" aria-label="Lihat detail Taman Indah Katapang">
+                <article class="property-card">
+                <div class="card-img-wrapper">
+                    <span class="badge sale">DIJUAL</span>
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80" alt="Contemporary family home">
+                </div>
+                <div class="card-body">
+                    <h4>Taman Indah Katapang</h4>
+                    <p class="location">Katapang, Bandung, Jawa Barat</p>
+                    <div class="facilities">
+                        <span>🛏️ 2 Kamar</span>
+                        <span>🛁 2 Kamar Mandi</span>
+                        <span>📐 Tipe 70</span>
+                    </div>
+                    <div class="price">Rp 700 Juta-an</div>
+                    </div>
+                </article>
+            </a>
+        </div>
+    </section>
+
+    <section class="stats-section">
+        <div class="stat-box">
+            <h2>12,500+</h2>
+            <p>Properti Terdaftar</p>
+        </div>
+        <div class="stat-box">
+            <h2>8,900+</h2>
+            <p>Pelanggan Puas</p>
+        </div>
+        <div class="stat-box">
+            <h2>320+</h2>
+            <p>Agen Profesional</p>
+        </div>
+        <div class="stat-box">
+            <h2>28+</h2>
+            <p>Tahun Pengalaman</p>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+        <h2>Siap menemukan rumah impian Anda?</h2>
+        <p>Hubungi tim marketing kami untuk konsultasi gratis dan temukan properti yang tepat untuk langkah berikutnya.</p>
+        <div class="contact-buttons">
+            <a href="https://wa.me/6285121186505" target="_blank" rel="noreferrer" class="btn-wa"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 3.5A11.9 11.9 0 0 0 12 0C5.4 0 .1 5.3.1 11.9c0 2.1.5 4.1 1.5 5.9L0 24l6.3-1.6a11.9 11.9 0 0 0 5.7 1.4h.1c6.6 0 11.9-5.3 11.9-11.9 0-3.2-1.2-6.2-3.5-8.4zM12.1 21.8c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.7.9 1-3.6-.2-.4a9.8 9.8 0 1 1 8.3 4.7zm5.4-7.3c-.3-.2-1.8-.9-2.1-1s-.5-.2-.7.2c-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.3-.5-2.5-1.6-.9-.8-1.6-1.8-1.8-2.1-.2-.3 0-.5.2-.7l.5-.6c.2-.2.2-.4.3-.6 0-.2 0-.4-.1-.6-.1-.2-.7-1.7-.9-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.1 1.1-1.1 2.6 0 1.5 1.1 3 1.2 3.2.2.2 2.2 3.4 5.4 4.8.8.3 1.4.5 1.9.7.8.2 1.5.2 2.1.1.7-.1 1.8-.7 2-1.4.2-.7.2-1.3.1-1.4-.1-.1-.3-.2-.6-.4z"/></svg>Chat via WhatsApp</a>
+            <a href="mailto:nusantaraindahproperty@gmail.com" class="btn-email">Kirim Email</a>
+        </div>
+    </section>
+
+    <section class="social-section" aria-label="Media sosial">
+        <div class="social-links">
+            <a href="https://www.instagram.com/nusantaraindahproperty" target="_blank" rel="noreferrer" class="social-link instagram" aria-label="Instagram">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5A5.5 5.5 0 1 1 6.5 13 5.5 5.5 0 0 1 12 7.5zm0 2A3.5 3.5 0 1 0 15.5 13 3.5 3.5 0 0 0 12 9.5zm5.25-3.25a1.25 1.25 0 1 1-1.25 1.25 1.25 1.25 0 0 1 1.25-1.25z"/></svg>
+            </a>
+            <a href="https://www.tiktok.com/@nusantaraindahproperty" target="_blank" rel="noreferrer" class="social-link tiktok" aria-label="TikTok">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 3c.8 2 2.3 3.2 4.5 3.5v2.7a7.4 7.4 0 0 1-4.5-1.3v6.4A5.7 5.7 0 1 1 8.8 8.8c.4 0 .8 0 1.1.1v2.8a3.2 3.2 0 0 0-1.1-.2 3.2 3.2 0 1 0 3.2 3.1V3h2.5z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/share/1FEMa37atR/?mibextid=wwXIfr" target="_blank" rel="noreferrer" class="social-link facebook" aria-label="Facebook">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 22v-8h2.7l.5-3h-3.2V7.5c0-.9.3-1.5 1.6-1.5H17V3.1c-.4-.1-1.6-.2-3-.2-3 0-5 1.8-5 5.1V11H6.5v3h2.5v8h4.5z"/></svg>
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Nusantara Indah Property. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const priceRange = document.getElementById('priceRange');
+        const priceOutput = document.getElementById('price-output');
+
+        const formatRupiah = (value) => new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            maximumFractionDigits: 0
+        }).format(value);
+
+        const updatePriceRange = () => {
+            const minValue = Number(priceRange.min);
+            const currentValue = Number(priceRange.value);
+            priceOutput.textContent = `${formatRupiah(minValue)} - ${formatRupiah(currentValue)}+`;
+        };
+
+        priceRange.addEventListener('input', updatePriceRange);
+        updatePriceRange();
+    </script>
+</body>
+</html>
