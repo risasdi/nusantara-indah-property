@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kalkulator KPR dan informasi suku bunga bank - Nusantara Indah Property">
+    <title>Panduan & Simulasi KPR | Nusantara Indah Property</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="images/logo/logo-10-32.png?v=4">
+    <link rel="icon" type="image/png" sizes="512x512" href="images/logo/logo-10.png?v=4">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/logo/logo-10-180.png?v=4">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .kpr-page { min-height: 100vh; background: var(--off-white); }
+        .kpr-header { background: var(--green); color: var(--white); padding: 50px 24px 60px; text-align: center; }
+        .kpr-header h1 { font-size: clamp(2.2rem, 5vw, 4rem); margin-bottom: 16px; color: var(--white); }
+        .kpr-header p { color: rgba(255,255,255,0.8); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+        
+        .kpr-container { max-width: 1200px; margin: -30px auto 60px; padding: 0 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
+        @media (max-width: 900px) { .kpr-container { grid-template-columns: 1fr; } }
+        
+        .kpr-card { background: var(--white); border-radius: 24px; padding: 40px; box-shadow: var(--shadow-soft); }
+        .kpr-card h2 { color: var(--green); font-size: 1.8rem; margin-bottom: 24px; border-bottom: 2px solid #edf0ef; padding-bottom: 16px; }
+        
+        .info-section { margin-bottom: 30px; }
+        .info-section h3 { color: var(--gold); font-size: 1.2rem; margin-bottom: 12px; }
+        .info-section p { color: var(--gray); font-size: 0.95rem; margin-bottom: 16px; line-height: 1.7; }
+        
+        .bank-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px; }
+        .bank-item { padding: 16px; border: 1px solid #edf0ef; border-radius: 12px; text-align: center; font-weight: 600; color: var(--green); background: #fafafa; }
+        
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; color: var(--green); font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+        .form-group input { width: 100%; height: 52px; padding: 14px; border: 1px solid #dfe5e4; border-radius: var(--control-radius); background: #fafafa; font-family: 'Montserrat', sans-serif; font-size: 1rem; color: var(--black); transition: all 0.2s; }
+        .form-group input:focus { border-color: rgba(6, 61, 54, 0.5); box-shadow: 0 0 0 4px rgba(6, 61, 54, 0.06); outline: none; }
+        .input-wrapper { position: relative; }
+        .input-prefix { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--gray); font-weight: 600; }
+        .input-suffix { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: var(--gray); font-weight: 600; }
+        .with-prefix { padding-left: 45px !important; }
+        .with-suffix { padding-right: 50px !important; }
+        input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+        
+        .btn-calc { width: 100%; height: 56px; margin-top: 10px; background: var(--gold); color: var(--green-deep); font-weight: 700; font-size: 1.05rem; border: none; border-radius: var(--control-radius); cursor: pointer; box-shadow: 0 12px 28px rgba(200, 161, 90, 0.28); transition: transform 0.2s; }
+        .btn-calc:hover { transform: translateY(-2px); }
+        
+        .result-box { margin-top: 30px; padding: 24px; background: rgba(6, 61, 54, 0.04); border-radius: 16px; text-align: center; border: 1px solid rgba(6, 61, 54, 0.1); display: none; }
+        .result-box.active { display: block; }
+        .result-title { font-size: 0.9rem; color: var(--gray); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; font-weight: 600; }
+        .result-amount { font-family: 'Cinzel', serif; font-size: 2.5rem; color: var(--green); font-weight: 700; }
+        .result-detail { display: flex; justify-content: space-between; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(0,0,0,0.08); font-size: 0.9rem; color: var(--gray); }
+        .result-note { font-size: 0.85rem; color: var(--gray); font-style: italic; margin-top: 20px; line-height: 1.6; text-align: center; }
+    </style>
+</head>
+<body class="kpr-page">
+    <nav class="navbar">
+        <div class="logo-container">
+            <a href="index.html" class="nav-logo-link" aria-label="Kembali ke halaman utama">
+                <img src="images/logo/logo-06.png" alt="Nusantara Indah Property" class="nav-logo" onerror="this.style.display='none'; document.getElementById('fallback-logo').style.display='inline-block';">
+            </a>
+            <span id="fallback-logo" class="fallback-logo">NUSANTARA INDAH</span>
+        </div>
+
+        <div class="nav-menu">
+            <ul class="nav-links">
+                <li><a href="index.html#home">Beranda</a></li>
+                <li><a href="index.html#catalog">Properti</a></li>
+                <li><a href="kpr.html">Info KPR</a></li>
+                <li><a href="index.html#about">Tentang Kami</a></li>
+                <li><a href="index.html#contact" class="nav-cta">Hubungi Agen</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="kpr-header">
+        <h1>Panduan KPR & Simulasi</h1>
+        <p>Hitung estimasi cicilan rumah impian Anda dan pelajari informasi dasar mengenai KPR dari berbagai bank.</p>
+    </header>
+
+    <main class="kpr-container">
+        <section class="kpr-card">
+            <h2>Informasi KPR</h2>
+            
+            <div class="info-section">
+                <h3>Bunga Flat vs Floating</h3>
+                <p><strong>Bunga Flat (Tetap):</strong> Suku bunga tidak akan berubah selama masa promo atau tenor yang disepakati. Cicilan Anda akan tetap sama setiap bulannya, memberikan kepastian finansial.</p>
+                <p><strong>Bunga Floating (Mengambang):</strong> Suku bunga akan mengikuti suku bunga acuan Bank Indonesia (BI Rate). Cicilan Anda bisa naik atau turun bergantung pada kondisi ekonomi.</p>
+            </div>
+            
+            <div class="info-section">
+                <h3>Daftar Bank Rekanan</h3>
+                <p>Kami bekerja sama dengan berbagai bank terpercaya untuk memberikan kemudahan proses KPR Anda:</p>
+                <div class="bank-grid">
+                    <div class="bank-item">Bank Syariah Indonesia (BSI)</div>
+                    <div class="bank-item">Bank Central Asia (BCA)</div>
+                    <div class="bank-item">Bank Mandiri</div>
+                    <div class="bank-item">Bank Tabungan Negara (BTN)</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="kpr-card">
+            <h2>Kalkulator Simulasi KPR</h2>
+            <form id="kpr-form">
+                <div class="form-group">
+                    <label for="harga">Harga Properti</label>
+                    <div class="input-wrapper">
+                        <span class="input-prefix">Rp</span>
+                        <input type="text" id="harga" class="with-prefix" placeholder="Misal: 500.000.000" required autocomplete="new-password">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="bunga">Suku Bunga per Tahun</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="bunga" class="with-suffix" placeholder="Misal: 5.5" step="0.01" required autocomplete="new-password">
+                        <span class="input-suffix">%</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="tenor">Tenor (Jangka Waktu)</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="tenor" class="with-suffix" placeholder="Misal: 15" required min="1" max="30" autocomplete="new-password">
+                        <span class="input-suffix">Tahun</span>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-calc">Hitung Cicilan</button>
+            </form>
+            
+            <div id="result-box" class="result-box">
+                <div class="result-title">Estimasi Cicilan per Bulan</div>
+                <div id="cicilan-bulanan" class="result-amount">Rp 0</div>
+                
+                <div class="result-detail">
+                    <span>Pokok Pinjaman:</span>
+                    <strong id="pokok-kredit">Rp 0</strong>
+                </div>
+                
+                <p class="result-note">*Angka di atas adalah estimasi cicilan tetap selama masa Promo (Fix). Untuk perhitungan skema Bunga Floating dan detail Sisa Pokok Hutang, silakan klik menu Hubungi Agen untuk konsultasi gratis.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Nusantara Indah Property. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const formatRupiah = (value) => new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            maximumFractionDigits: 0
+        }).format(value);
+
+        const inputHarga = document.getElementById('harga');
+        inputHarga.addEventListener('input', function(e) {
+            let val = this.value.replace(/[^0-9]/g, '');
+            if(val) {
+                this.value = new Intl.NumberFormat('id-ID').format(val);
+            }
+        });
+
+        document.getElementById('kpr-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const harga = parseFloat(document.getElementById('harga').value.replace(/\./g, ''));
+            const bungaTahunan = parseFloat(document.getElementById('bunga').value);
+            const tenorTahun = parseInt(document.getElementById('tenor').value);
+            
+            if (isNaN(harga) || isNaN(bungaTahunan) || isNaN(tenorTahun)) return;
+
+            // Promo DP 0%
+            const pokokKredit = harga;
+            
+            const r = (bungaTahunan / 100) / 12;
+            const n = tenorTahun * 12;
+            
+            let cicilanBulanan = 0;
+            if (r > 0) {
+                cicilanBulanan = pokokKredit * (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+            } else {
+                cicilanBulanan = pokokKredit / n;
+            }
+
+            document.getElementById('pokok-kredit').textContent = formatRupiah(pokokKredit);
+            document.getElementById('cicilan-bulanan').textContent = formatRupiah(cicilanBulanan);
+            
+            document.getElementById('result-box').classList.add('active');
+        });
+    </script>
+</body>
+</html>
