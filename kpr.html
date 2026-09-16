@@ -16,24 +16,24 @@
         .kpr-page { min-height: 100vh; background: var(--off-white); }
         .kpr-header { background: var(--green); color: var(--white); padding: 50px 24px 60px; text-align: center; }
         .kpr-header h1 { font-size: clamp(2.2rem, 5vw, 4rem); margin-bottom: 16px; color: var(--white); }
-        .kpr-header p { color: rgba(255,255,255,0.8); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+        .kpr-header p { color: var(--gold); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
         
         .kpr-container { max-width: 1200px; margin: -30px auto 60px; padding: 0 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
         @media (max-width: 900px) { .kpr-container { grid-template-columns: 1fr; } }
         
         .kpr-card { background: var(--white); border-radius: 24px; padding: 40px; box-shadow: var(--shadow-soft); }
-        .kpr-card h2 { color: var(--green); font-size: 1.8rem; margin-bottom: 24px; border-bottom: 2px solid #edf0ef; padding-bottom: 16px; }
+        .kpr-card h2 { color: var(--green); font-size: 1.8rem; margin-bottom: 24px; border-bottom: 1px solid var(--gold); padding-bottom: 16px; }
         
         .info-section { margin-bottom: 30px; }
         .info-section h3 { color: var(--gold); font-size: 1.2rem; margin-bottom: 12px; }
         .info-section p { color: var(--gray); font-size: 0.95rem; margin-bottom: 16px; line-height: 1.7; }
         
         .bank-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px; }
-        .bank-item { padding: 16px; border: 1px solid #edf0ef; border-radius: 12px; text-align: center; font-weight: 600; color: var(--green); background: #fafafa; }
+        .bank-item { padding: 16px; border: 1px solid var(--gold); border-radius: 12px; text-align: center; font-weight: 600; color: var(--green); background: var(--white); }
         
         .form-group { margin-bottom: 20px; }
         .form-group label { display: block; margin-bottom: 8px; color: var(--green); font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
-        .form-group input { width: 100%; height: 52px; padding: 14px; border: 1px solid #dfe5e4; border-radius: var(--control-radius); background: #fafafa; font-family: 'Montserrat', sans-serif; font-size: 1rem; color: var(--black); transition: all 0.2s; }
+        .form-group input { width: 100%; height: 52px; padding: 14px; border: 1px solid var(--gold); border-radius: var(--control-radius); background: var(--white); font-family: 'Montserrat', sans-serif; font-size: 1rem; color: var(--black); transition: all 0.2s; }
         .form-group input:focus { border-color: rgba(6, 61, 54, 0.5); box-shadow: 0 0 0 4px rgba(6, 61, 54, 0.06); outline: none; }
         .input-wrapper { position: relative; }
         .input-prefix { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--gray); font-weight: 600; }
@@ -51,11 +51,11 @@
         .btn-calc { width: 100%; height: 56px; margin-top: 10px; background: var(--gold); color: var(--green-deep); font-weight: 700; font-size: 1.05rem; border: none; border-radius: var(--control-radius); cursor: pointer; box-shadow: 0 12px 28px rgba(200, 161, 90, 0.28); transition: transform 0.2s; }
         .btn-calc:hover { transform: translateY(-2px); }
         
-        .result-box { margin-top: 30px; padding: 24px; background: rgba(6, 61, 54, 0.04); border-radius: 16px; text-align: center; border: 1px solid rgba(6, 61, 54, 0.1); display: none; }
+        .result-box { margin-top: 30px; padding: 24px; background: rgba(6, 61, 54, 0.04); border-radius: 16px; text-align: center; border: 1px solid var(--gold); display: none; }
         .result-box.active { display: block; }
         .result-title { font-size: 0.9rem; color: var(--gray); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; font-weight: 600; }
         .result-amount { font-family: 'Cinzel', serif; font-size: 2.5rem; color: var(--green); font-weight: 700; }
-        .result-detail { display: flex; justify-content: space-between; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(0,0,0,0.08); font-size: 0.9rem; color: var(--gray); }
+        .result-detail { display: flex; justify-content: space-between; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--gold); font-size: 0.9rem; color: var(--gray); }
         .result-note { font-size: 0.85rem; color: var(--gray); font-style: italic; margin-top: 20px; line-height: 1.6; text-align: center; }
     </style>
 </head>
@@ -80,7 +80,7 @@
     </nav>
 
     <header class="kpr-header">
-        <h1>Panduan KPR & Simulasi</h1>
+        <h1 class="fade-up">Panduan KPR & Simulasi</h1>
         <p>Hitung estimasi cicilan rumah impian Anda dan pelajari informasi dasar mengenai KPR dari berbagai bank.</p>
     </header>
 
@@ -197,5 +197,144 @@
             document.getElementById('result-box').classList.add('active');
         });
     </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            document.querySelectorAll('.fade-up').forEach(element => {
+                observer.observe(element);
+            });
+        });
+    </script>
+
+    <!-- Lightbox Modal -->
+    <div class="lightbox-overlay" id="lightbox-overlay">
+        <button class="lightbox-prev" id="lightbox-prev" aria-label="Previous image">&#10094;</button>
+        <div class="lightbox-content">
+            
+            <img class="lightbox-img" id="lightbox-img" src="" alt="Enlarged view">
+        </div>
+        <button class="lightbox-next" id="lightbox-next" aria-label="Next image">&#10095;</button>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const overlay = document.getElementById('lightbox-overlay');
+            const imgEl = document.getElementById('lightbox-img');
+            const btnPrev = document.getElementById('lightbox-prev');
+            const btnNext = document.getElementById('lightbox-next');
+            
+            let images = [];
+            let currentIndex = 0;
+
+            const refreshLightbox = () => {
+                const triggers = document.querySelectorAll('.lightbox-trigger');
+                images = Array.from(triggers).map(img => img.src);
+                
+                triggers.forEach((trigger) => {
+                    const newTrigger = trigger.cloneNode(true);
+                    trigger.parentNode.replaceChild(newTrigger, trigger);
+                    
+                    newTrigger.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        currentIndex = images.indexOf(newTrigger.src);
+                        if(currentIndex === -1) currentIndex = 0;
+                        openLightbox(currentIndex);
+                    });
+                });
+            };
+
+            const openLightbox = (index) => {
+                if (images.length === 0) return;
+                imgEl.src = images[index];
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            };
+
+            const closeLightbox = () => {
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            };
+
+            const showPrev = (e) => {
+                if(e) e.stopPropagation();
+                if (images.length === 0) return;
+                currentIndex = (currentIndex - 1 + images.length) % images.length;
+                imgEl.src = images[currentIndex];
+            };
+
+            const showNext = (e) => {
+                if(e) e.stopPropagation();
+                if (images.length === 0) return;
+                currentIndex = (currentIndex + 1) % images.length;
+                imgEl.src = images[currentIndex];
+            };
+
+            btnPrev.addEventListener('click', showPrev);
+            btnNext.addEventListener('click', showNext);
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay || e.target.closest('.lightbox-content') === null || e.target === imgEl) {
+                    closeLightbox();
+                }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (!overlay.classList.contains('active')) return;
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') showPrev();
+                if (e.key === 'ArrowRight') showNext();
+            });
+
+            // Swipe logic
+            let touchstartX = 0;
+            let touchendX = 0;
+            
+            overlay.addEventListener('touchstart', e => {
+                touchstartX = e.changedTouches[0].screenX;
+            }, {passive: true});
+
+            overlay.addEventListener('touchend', e => {
+                touchendX = e.changedTouches[0].screenX;
+                handleSwipe();
+            }, {passive: true});
+
+            function handleSwipe() {
+                const threshold = 50;
+                if (touchendX < touchstartX - threshold) {
+                    showNext(); // Swiped left -> Next
+                }
+                if (touchendX > touchstartX + threshold) {
+                    showPrev(); // Swiped right -> Prev
+                }
+            }
+
+            refreshLightbox();
+            
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.addedNodes.length > 0) {
+                        const hasTrigger = Array.from(mutation.addedNodes).some(node => 
+                            node.nodeType === 1 && (node.classList.contains('lightbox-trigger') || node.querySelector('.lightbox-trigger'))
+                        );
+                        if(hasTrigger) refreshLightbox();
+                    }
+                });
+            });
+            observer.observe(document.body, { childList: true, subtree: true });
+        });
+    </script>
+
 </body>
 </html>

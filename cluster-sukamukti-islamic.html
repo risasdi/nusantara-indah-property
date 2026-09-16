@@ -13,22 +13,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
-        .cluster-choice-page { min-height: 100vh; background: #f4f6f5; }
+        .cluster-choice-page { min-height: 100vh; background: var(--off-white); }
         .choice-main { width: min(1120px, calc(100% - 40px)); margin: 0 auto; padding: 70px 0 90px; }
         .choice-heading { max-width: 720px; margin-bottom: 42px; }
         .choice-label { color: #c8a15a; font-size: .74rem; font-weight: 700; letter-spacing: .22em; }
         .choice-heading h1 { margin: 14px 0; color: #063d36; font-size: clamp(2.1rem, 4vw, 4rem); line-height: 1.1; }
-        .choice-heading p { color: #666; line-height: 1.8; }
+        .choice-heading p { color: var(--green); line-height: 1.8; }
         .choice-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
-        .choice-card { overflow: hidden; background: #fff; border-radius: 18px; color: inherit; box-shadow: 0 16px 36px rgba(17,17,17,.06); transition: transform .25s ease, box-shadow .25s ease; }
-        .choice-card:hover, .choice-card:focus-visible { transform: translateY(-6px); box-shadow: 0 24px 42px rgba(17,17,17,.12); }
+        .choice-card { overflow: hidden; background: var(--white); border-radius: 18px; color: inherit; box-shadow: 0 16px 36px rgba(6, 61, 54,.06); transition: transform .25s ease, box-shadow .25s ease; }
+        .choice-card:hover, .choice-card:focus-visible { transform: translateY(-6px); box-shadow: 0 24px 42px rgba(6, 61, 54,.12); }
         .choice-card img { display: block; width: 100%; height: 280px; object-fit: cover; }
         .choice-card-body { padding: 24px; }
         .choice-card-body h2 { margin-bottom: 8px; color: #063d36; font-size: 1.55rem; }
-        .choice-card-body p { margin-bottom: 18px; color: #666; line-height: 1.7; }
+        .choice-card-body p { margin-bottom: 18px; color: var(--green); line-height: 1.7; }
         .choice-price { margin-bottom: 18px; color: #063d36; font: 700 1.35rem 'Cinzel', serif; }
-        .choice-specs { display: flex; flex-wrap: wrap; gap: 10px 14px; padding-top: 16px; border-top: 1px solid #edf0ef; color: #4d4d4d; font-size: .8rem; }
-        .choice-link { display: inline-flex; margin-top: 22px; padding: 13px 20px; border-radius: 12px; background: #063d36; color: #fff; font-weight: 700; }
+        .choice-specs { display: flex; flex-wrap: wrap; gap: 10px 14px; padding-top: 16px; border-top: 1px solid var(--gold); color: var(--green); font-size: .8rem; }
+        .choice-link { display: inline-flex; margin-top: 22px; padding: 13px 20px; border-radius: 12px; background: #063d36; color: var(--white); font-weight: 700; }
         @media (max-width: 760px) { .choice-main { padding-top: 42px; } .choice-grid { grid-template-columns: 1fr; } .choice-card img { height: 230px; } }
     </style>
 </head>
@@ -76,5 +76,144 @@
             </a>
         </div>
     </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            document.querySelectorAll('.fade-up').forEach(element => {
+                observer.observe(element);
+            });
+        });
+    </script>
+
+    <!-- Lightbox Modal -->
+    <div class="lightbox-overlay" id="lightbox-overlay">
+        <button class="lightbox-prev" id="lightbox-prev" aria-label="Previous image">&#10094;</button>
+        <div class="lightbox-content">
+            
+            <img class="lightbox-img" id="lightbox-img" src="" alt="Enlarged view">
+        </div>
+        <button class="lightbox-next" id="lightbox-next" aria-label="Next image">&#10095;</button>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const overlay = document.getElementById('lightbox-overlay');
+            const imgEl = document.getElementById('lightbox-img');
+            const btnPrev = document.getElementById('lightbox-prev');
+            const btnNext = document.getElementById('lightbox-next');
+            
+            let images = [];
+            let currentIndex = 0;
+
+            const refreshLightbox = () => {
+                const triggers = document.querySelectorAll('.lightbox-trigger');
+                images = Array.from(triggers).map(img => img.src);
+                
+                triggers.forEach((trigger) => {
+                    const newTrigger = trigger.cloneNode(true);
+                    trigger.parentNode.replaceChild(newTrigger, trigger);
+                    
+                    newTrigger.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        currentIndex = images.indexOf(newTrigger.src);
+                        if(currentIndex === -1) currentIndex = 0;
+                        openLightbox(currentIndex);
+                    });
+                });
+            };
+
+            const openLightbox = (index) => {
+                if (images.length === 0) return;
+                imgEl.src = images[index];
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            };
+
+            const closeLightbox = () => {
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            };
+
+            const showPrev = (e) => {
+                if(e) e.stopPropagation();
+                if (images.length === 0) return;
+                currentIndex = (currentIndex - 1 + images.length) % images.length;
+                imgEl.src = images[currentIndex];
+            };
+
+            const showNext = (e) => {
+                if(e) e.stopPropagation();
+                if (images.length === 0) return;
+                currentIndex = (currentIndex + 1) % images.length;
+                imgEl.src = images[currentIndex];
+            };
+
+            btnPrev.addEventListener('click', showPrev);
+            btnNext.addEventListener('click', showNext);
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay || e.target.closest('.lightbox-content') === null || e.target === imgEl) {
+                    closeLightbox();
+                }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (!overlay.classList.contains('active')) return;
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') showPrev();
+                if (e.key === 'ArrowRight') showNext();
+            });
+
+            // Swipe logic
+            let touchstartX = 0;
+            let touchendX = 0;
+            
+            overlay.addEventListener('touchstart', e => {
+                touchstartX = e.changedTouches[0].screenX;
+            }, {passive: true});
+
+            overlay.addEventListener('touchend', e => {
+                touchendX = e.changedTouches[0].screenX;
+                handleSwipe();
+            }, {passive: true});
+
+            function handleSwipe() {
+                const threshold = 50;
+                if (touchendX < touchstartX - threshold) {
+                    showNext(); // Swiped left -> Next
+                }
+                if (touchendX > touchstartX + threshold) {
+                    showPrev(); // Swiped right -> Prev
+                }
+            }
+
+            refreshLightbox();
+            
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.addedNodes.length > 0) {
+                        const hasTrigger = Array.from(mutation.addedNodes).some(node => 
+                            node.nodeType === 1 && (node.classList.contains('lightbox-trigger') || node.querySelector('.lightbox-trigger'))
+                        );
+                        if(hasTrigger) refreshLightbox();
+                    }
+                });
+            });
+            observer.observe(document.body, { childList: true, subtree: true });
+        });
+    </script>
+
 </body>
 </html>

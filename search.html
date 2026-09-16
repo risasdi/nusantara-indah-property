@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Hasil pencarian properti Nusantara Indah Property.">
@@ -14,22 +15,22 @@
     <link rel="stylesheet" href="style.css">
     <style>
         .results-page { min-height: 100vh; background: var(--off-white); }
-        .results-header { background: var(--green); color: var(--white); padding: 34px 24px 46px; }
+        .results-header { background: var(--green); color: var(--white); padding: 34px 24px 76px; }
         .results-heading { width: min(1200px, 100%); margin: 0 auto; }
         .results-heading span { color: var(--gold-soft); font-size: .74rem; font-weight: 700; letter-spacing: .22em; }
         .results-heading h1 { margin-top: 12px; font-size: clamp(2rem, 4vw, 3.8rem); line-height: 1.1; }
-        .results-summary { margin-top: 14px; color: rgba(255,255,255,.75); }
+        .results-summary { margin-top: 14px; color: var(--gold); }
         .results-main { width: min(1200px, calc(100% - 48px)); margin: 0 auto; padding: 48px 0 80px; }
         .results-filter { display: flex; flex-wrap: wrap; gap: 10px 24px; margin-bottom: 30px; color: var(--gray); font-size: .88rem; }
         .results-filter strong { color: var(--green); }
         .results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 28px; }
-        .results-card { overflow: hidden; background: var(--white); border-radius: 18px; box-shadow: 0 16px 36px rgba(17,17,17,.06); }
+        .results-card { overflow: hidden; background: var(--white); border-radius: 18px; box-shadow: 0 16px 36px rgba(6, 61, 54,.06); }
         .results-card img { width: 100%; height: 220px; object-fit: cover; }
         .results-card-body { padding: 22px; }
-        .results-card h2 { color: var(--green); font-size: 1.35rem; margin-bottom: 8px; }
+        .results-card h2 { color: var(--gold); font-size: 1.35rem; margin-bottom: 8px; }
         .results-card p { color: var(--gray); font-size: .9rem; }
         .results-card .result-price { margin: 18px 0; color: var(--green); font: 700 1.25rem 'Cinzel', serif; }
-        .result-specs { display: flex; flex-wrap: wrap; gap: 8px 12px; padding: 14px 0; border-top: 1px solid #edf0ef; border-bottom: 1px solid #edf0ef; color: #4d4d4d; font-size: .78rem; }
+        .result-specs { display: flex; flex-wrap: wrap; gap: 8px 12px; padding: 14px 0; border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold); color: var(--green); font-size: .78rem; }
         .result-link { display: inline-flex; margin-top: 18px; padding: 12px 18px; border-radius: var(--control-radius); background: var(--green); color: var(--white); font-size: .84rem; font-weight: 700; }
         .empty-result { padding: 34px; background: var(--white); border-radius: 18px; color: var(--gray); text-align: center; }
         @media (max-width: 620px) { .results-header { padding: 24px 20px 36px; } .results-main { width: min(100% - 40px, 520px); padding-top: 32px; } }
@@ -60,114 +61,304 @@
     </header>
 
     <main class="results-main">
-        <div class="results-filter" id="results-filter"></div>
+        <div class="search-container" style="margin-top: -85px; margin-bottom: 40px; padding: 0;">
+        <form class="search-box" action="search.html" method="get" aria-label="Form pencarian properti">
+            <div class="search-item">
+                <label for="location">Lokasi</label>
+                <input id="location" name="location" type="text" placeholder="Masukkan lokasi">
+            </div>
+
+            <div class="search-item">
+                <label for="propertyType">Tipe Properti</label>
+                <select id="propertyType" name="propertyType">
+                    <option value="Semua Properti">Semua Properti</option>
+                    <option value="Cluster Sukamukti Islamic">Cluster Sukamukti Islamic</option>
+                    <option value="Villa Resik">Villa Resik</option>
+                    <option value="Taman Indah Katapang">Taman Indah Katapang</option>
+                </select>
+            </div>
+
+            <div class="search-item price-slider-container">
+                <div class="price-header">
+                    <label for="priceRange">Rentang Harga</label>
+                    <span id="price-output">Rp 0 - Rp 1.000.000.000+</span>
+                </div>
+                <input type="range" id="priceRange" name="maxPrice" min="0" max="1000000000" step="50000000" value="1000000000" class="slider">
+            </div>
+
+            <button type="submit" class="btn-search">Cari Properti</button>
+        </form>
+    </div>
         <div class="results-grid" id="results-grid"></div>
     </main>
 
     <script>
-        const properties = [
-            {
-                name: 'Cluster Sukamukti Islamic - Tipe 36',
-                project: 'Cluster Sukamukti Islamic',
-                location: 'Katapang, Bandung, Jawa Barat',
-                price: 400000000,
-                priceLabel: 'Rp 400 Juta-an',
-                specs: ['2 Kamar', '1 Kamar Mandi', 'Tipe 36'],
-                image: 'images/Cluster-Sukamukti-Islamic-type36/Area-luar-depan-rumah.jpeg',
-                link: 'cluster-sukamukti-islamic-tipe-36.html'
-            },
-            {
-                name: 'Cluster Sukamukti Islamic - Tipe 45',
-                project: 'Cluster Sukamukti Islamic',
-                location: 'Katapang, Bandung, Jawa Barat',
-                price: 500000000,
-                priceLabel: 'Rp 500 Juta-an',
-                specs: ['2 Kamar', '1 Kamar Mandi', 'Tipe 45'],
-                image: 'images/Cluster-Sukamukti-Islamic-type45/Tampak-Depan-Rumah.png',
-                link: 'cluster-sukamukti-islamic-tipe-45.html'
-            },
-            {
-                name: 'Villa Resik',
-                project: 'Villa Resik',
-                location: 'Buahbatu, Bandung, Jawa Barat',
-                price: 600000000,
-                priceLabel: 'Rp 600 Juta-an',
-                specs: ['2 Kamar', '2 Kamar Mandi', 'Tipe 60'],
-                image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80',
-                link: 'villa-resik.html'
-            },
-            {
-                name: 'Taman Indah Katapang',
-                project: 'Taman Indah Katapang',
-                location: 'Katapang, Bandung, Jawa Barat',
-                price: 700000000,
-                priceLabel: 'Rp 700 Juta-an',
-                specs: ['2 Kamar', '2 Kamar Mandi', 'Tipe 70'],
-                image: 'images/taman-katapang-indah/rumah-tampak-depan.png',
-                link: 'taman-katapang-indah.html'
-            }
-        ];
+        document.addEventListener("DOMContentLoaded", () => {
+            const properties = [
+                {
+                    name: 'Cluster Sukamukti Islamic - Tipe 36',
+                    project: 'Cluster Sukamukti Islamic',
+                    location: 'Katapang, Bandung, Jawa Barat',
+                    price: 400000000,
+                    priceLabel: 'Rp 400 Juta-an',
+                    specs: ['🛏️ 2 Kamar', '🛁 1 Kamar Mandi', '📐 Tipe 36'],
+                    image: 'images/Cluster-Sukamukti-Islamic-type36/Area-luar-depan-rumah.jpeg',
+                    link: 'cluster-sukamukti-islamic-tipe-36.html'
+                },
+                {
+                    name: 'Cluster Sukamukti Islamic - Tipe 45',
+                    project: 'Cluster Sukamukti Islamic',
+                    location: 'Katapang, Bandung, Jawa Barat',
+                    price: 500000000,
+                    priceLabel: 'Rp 500 Juta-an',
+                    specs: ['🛏️ 2 Kamar', '🛁 1 Kamar Mandi', '📐 Tipe 45'],
+                    image: 'images/Cluster-Sukamukti-Islamic-type45/Tampak-Depan-Rumah.png',
+                    link: 'cluster-sukamukti-islamic-tipe-45.html'
+                },
+                {
+                    name: 'Villa Resik',
+                    project: 'Villa Resik',
+                    location: 'Buahbatu, Bandung, Jawa Barat',
+                    price: 600000000,
+                    priceLabel: 'Rp 600 Juta-an',
+                    specs: ['🛏️ 2 Kamar', '🛁 2 Kamar Mandi', '📐 Tipe 60'],
+                    image: 'images/villa-resik/tampak-depan-rumah.png',
+                    link: 'villa-resik.html'
+                },
+                {
+                    name: 'Taman Indah Katapang',
+                    project: 'Taman Indah Katapang',
+                    location: 'Katapang, Bandung, Jawa Barat',
+                    price: 700000000,
+                    priceLabel: 'Rp 700 Juta-an',
+                    specs: ['🛏️ 2 Kamar', '🛁 2 Kamar Mandi', '📐 Tipe 70'],
+                    image: 'images/taman-katapang-indah/rumah-tampak-depan.png',
+                    link: 'taman-katapang-indah.html'
+                }
+            ];
 
-        const params = new URLSearchParams(window.location.search);
-        const locationQuery = (params.get('location') || '').trim();
-        const propertyType = params.get('propertyType') || 'Semua Properti';
-        const maxPriceParam = params.get('maxPrice');
-        const parsedMaxPrice = Number(maxPriceParam);
-        const maxPrice = maxPriceParam !== null && Number.isFinite(parsedMaxPrice) ? parsedMaxPrice : 1000000000;
-        const formatRupiah = (value) => new Intl.NumberFormat('id-ID', {
-            style: 'currency', currency: 'IDR', maximumFractionDigits: 0
-        }).format(value);
-
-        const matchesLocation = (property) => !locationQuery || property.location.toLowerCase().includes(locationQuery.toLowerCase());
-        const matchesPropertyType = (property) => propertyType === 'Semua Properti' || property.project === propertyType;
-        const filteredProperties = properties.filter((property) => matchesLocation(property) && matchesPropertyType(property) && property.price <= maxPrice);
-
-        document.getElementById('results-summary').textContent = `${filteredProperties.length} properti ditemukan sesuai pilihan Anda.`;
-        const resultsFilter = document.getElementById('results-filter');
-        resultsFilter.textContent = `Lokasi: ${locationQuery || 'Semua lokasi'} | Tipe: ${propertyType} | Maksimal harga: ${formatRupiah(maxPrice)}+`;
-
-        const resultsGrid = document.getElementById('results-grid');
-        if (!filteredProperties.length) {
-            const emptyResult = document.createElement('div');
-            emptyResult.className = 'empty-result';
-            emptyResult.textContent = 'Belum ada properti yang sesuai dengan lokasi, tipe, dan batas harga tersebut. Silakan ubah pilihan pencarian Anda.';
-            resultsGrid.appendChild(emptyResult);
-        } else {
-            filteredProperties.forEach((property) => {
-                const card = document.createElement('article');
-                card.className = 'results-card';
-
-                const image = document.createElement('img');
-                image.src = property.image;
-                image.alt = property.name;
-
-                const body = document.createElement('div');
-                body.className = 'results-card-body';
-
-                const name = document.createElement('h2');
-                name.textContent = property.name;
-                const location = document.createElement('p');
-                location.textContent = property.location;
-                const price = document.createElement('div');
-                price.className = 'result-price';
-                price.textContent = property.priceLabel;
-                const specs = document.createElement('div');
-                specs.className = 'result-specs';
-                property.specs.forEach((spec) => {
-                    const specItem = document.createElement('span');
-                    specItem.textContent = spec;
-                    specs.appendChild(specItem);
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        obs.unobserve(entry.target);
+                    }
                 });
-                const link = document.createElement('a');
-                link.className = 'result-link';
-                link.href = property.link;
-                link.textContent = 'Lihat Detail';
+            }, observerOptions);
 
-                body.append(name, location, price, specs, link);
-                card.append(image, body);
-                resultsGrid.appendChild(card);
+            const params = new URLSearchParams(window.location.search);
+            const locationQuery = (params.get('location') || '').trim();
+            const propertyType = params.get('propertyType') || 'Semua Properti';
+            const maxPriceParam = params.get('maxPrice');
+            const parsedMaxPrice = Number(maxPriceParam);
+            const maxPrice = maxPriceParam !== null && Number.isFinite(parsedMaxPrice) ? parsedMaxPrice : 1000000000;
+            const formatRupiah = (value) => new Intl.NumberFormat('id-ID', {
+                style: 'currency', currency: 'IDR', maximumFractionDigits: 0
+            }).format(value);
+
+            const matchesLocation = (property) => !locationQuery || property.location.toLowerCase().includes(locationQuery.toLowerCase());
+            const matchesPropertyType = (property) => propertyType === 'Semua Properti' || property.project === propertyType;
+            const filteredProperties = properties.filter((property) => matchesLocation(property) && matchesPropertyType(property) && property.price <= maxPrice);
+
+            document.getElementById('results-summary').textContent = `${filteredProperties.length} properti ditemukan sesuai pilihan Anda.`;
+            // Pre-fill the search box with current query params
+            document.getElementById('location').value = locationQuery;
+            document.getElementById('propertyType').value = propertyType;
+            const priceSlider = document.getElementById('priceRange');
+            priceSlider.value = maxPrice;
+            
+            // Slider interactivity
+            const priceOutput = document.getElementById('price-output');
+            const formatPrice = (val) => new Intl.NumberFormat('id-ID', {
+                style: 'currency', currency: 'IDR', maximumFractionDigits: 0
+            }).format(val);
+            
+            priceOutput.textContent = `Rp 0 - ${formatPrice(maxPrice)}${maxPrice >= 1000000000 ? '+' : ''}`;
+            
+            priceSlider.addEventListener('input', (e) => {
+                const val = parseInt(e.target.value);
+                const plus = val >= 1000000000 ? '+' : '';
+                priceOutput.textContent = `Rp 0 - ${formatPrice(val)}${plus}`;
             });
-        }
+
+            const resultsGrid = document.getElementById('results-grid');
+            if (!filteredProperties.length) {
+                const emptyResult = document.createElement('div');
+                emptyResult.className = 'empty-result';
+                emptyResult.textContent = 'Belum ada properti yang sesuai dengan lokasi, tipe, dan batas harga tersebut. Silakan ubah pilihan pencarian Anda.';
+                resultsGrid.appendChild(emptyResult);
+            } else {
+                filteredProperties.forEach((property, index) => {
+                    const card = document.createElement('article');
+                    card.className = 'property-card flip-card fade-up';
+                    card.style.transitionDelay = `${index * 0.1}s`;
+                    
+                    const facilitiesHtml = property.specs.map(spec => `<span>${spec}</span>`).join('');
+                    const badgeClass = property.name === 'Villa Resik' ? 'badge rent' : 'badge sale';
+                    const badgeText = property.name === 'Villa Resik' ? 'TERJUAL' : 'DIJUAL';
+
+                    card.innerHTML = `
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="card-img-wrapper">
+                                    <span class="${badgeClass}">${badgeText}</span>
+                                    <img src="${property.image}" alt="${property.name}">
+                                </div>
+                                <div class="card-body">
+                                    <h4>${property.name}</h4>
+                                    <p class="front-location">📍 ${property.location}</p>
+                                    <div class="price">${property.priceLabel}</div>
+                                </div>
+                            </div>
+                            <div class="flip-card-back">
+                            <div class="facilities">
+                                    ${facilitiesHtml}
+                                </div>
+                                <a href="${property.link}" class="btn-primary" style="margin-top: 20px; display: inline-block; text-decoration: none;">Lihat Detail</a>
+                            </div>
+                        </div>
+                    `;
+                    resultsGrid.appendChild(card);
+                });
+
+                document.querySelectorAll('.flip-card').forEach(card => {
+                    card.addEventListener('click', function(e) {
+                        if (e.target.closest('a')) return;
+                        const inner = this.querySelector('.flip-card-inner');
+                        if (inner) {
+                            inner.classList.toggle('is-flipped');
+                        }
+                    });
+                });
+
+                document.querySelectorAll('.fade-up').forEach(element => {
+                    observer.observe(element);
+                });
+            }
+        });
     </script>
+
+    <!-- Lightbox Modal -->
+    <div class="lightbox-overlay" id="lightbox-overlay">
+        <button class="lightbox-prev" id="lightbox-prev" aria-label="Previous image">&#10094;</button>
+        <div class="lightbox-content">
+            
+            <img class="lightbox-img" id="lightbox-img" src="" alt="Enlarged view">
+        </div>
+        <button class="lightbox-next" id="lightbox-next" aria-label="Next image">&#10095;</button>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const overlay = document.getElementById('lightbox-overlay');
+            const imgEl = document.getElementById('lightbox-img');
+            const btnPrev = document.getElementById('lightbox-prev');
+            const btnNext = document.getElementById('lightbox-next');
+            
+            let images = [];
+            let currentIndex = 0;
+
+            const refreshLightbox = () => {
+                const triggers = document.querySelectorAll('.lightbox-trigger');
+                images = Array.from(triggers).map(img => img.src);
+                
+                triggers.forEach((trigger) => {
+                    const newTrigger = trigger.cloneNode(true);
+                    trigger.parentNode.replaceChild(newTrigger, trigger);
+                    
+                    newTrigger.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        currentIndex = images.indexOf(newTrigger.src);
+                        if(currentIndex === -1) currentIndex = 0;
+                        openLightbox(currentIndex);
+                    });
+                });
+            };
+
+            const openLightbox = (index) => {
+                if (images.length === 0) return;
+                imgEl.src = images[index];
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            };
+
+            const closeLightbox = () => {
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            };
+
+            const showPrev = (e) => {
+                if(e) e.stopPropagation();
+                if (images.length === 0) return;
+                currentIndex = (currentIndex - 1 + images.length) % images.length;
+                imgEl.src = images[currentIndex];
+            };
+
+            const showNext = (e) => {
+                if(e) e.stopPropagation();
+                if (images.length === 0) return;
+                currentIndex = (currentIndex + 1) % images.length;
+                imgEl.src = images[currentIndex];
+            };
+
+            btnPrev.addEventListener('click', showPrev);
+            btnNext.addEventListener('click', showNext);
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay || e.target.closest('.lightbox-content') === null || e.target === imgEl) {
+                    closeLightbox();
+                }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (!overlay.classList.contains('active')) return;
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') showPrev();
+                if (e.key === 'ArrowRight') showNext();
+            });
+
+            // Swipe logic
+            let touchstartX = 0;
+            let touchendX = 0;
+            
+            overlay.addEventListener('touchstart', e => {
+                touchstartX = e.changedTouches[0].screenX;
+            }, {passive: true});
+
+            overlay.addEventListener('touchend', e => {
+                touchendX = e.changedTouches[0].screenX;
+                handleSwipe();
+            }, {passive: true});
+
+            function handleSwipe() {
+                const threshold = 50;
+                if (touchendX < touchstartX - threshold) {
+                    showNext(); // Swiped left -> Next
+                }
+                if (touchendX > touchstartX + threshold) {
+                    showPrev(); // Swiped right -> Prev
+                }
+            }
+
+            refreshLightbox();
+            
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.addedNodes.length > 0) {
+                        const hasTrigger = Array.from(mutation.addedNodes).some(node => 
+                            node.nodeType === 1 && (node.classList.contains('lightbox-trigger') || node.querySelector('.lightbox-trigger'))
+                        );
+                        if(hasTrigger) refreshLightbox();
+                    }
+                });
+            });
+            observer.observe(document.body, { childList: true, subtree: true });
+        });
+    </script>
+
 </body>
 </html>
