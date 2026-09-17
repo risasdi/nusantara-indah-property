@@ -43,7 +43,7 @@
 <body class="detail-page">
     <nav class="navbar">
         <div class="logo-container">
-            <a href="index.html" class="nav-logo-link" aria-label="Kembali ke halaman utama"><img src="images/logo/logo-06.png" alt="Nusantara Indah Property" class="nav-logo"></a>
+            <a href="index.html" class="nav-logo-link" aria-label="Kembali ke halaman utama"><img loading="lazy" src="images/logo/logo-06.png" alt="Nusantara Indah Property" class="nav-logo"></a>
         </div>
         <div class="nav-menu">
             <ul class="nav-links">
@@ -60,12 +60,12 @@
         <div class="detail-grid fade-up">
             <div class="property-gallery" data-gallery tabindex="0" aria-label="Galeri foto Villa Resik">
                 <div class="gallery-track">
-                    <img class="gallery-slide lightbox-trigger" src="images/villa-resik/tampak-depan-rumah.png" alt="Tampak depan Villa Resik">
-                    <img class="gallery-slide lightbox-trigger" src="images/villa-resik/ruang-tamu-modern-minimalist-bawah-tangga.png" alt="Ruang keluarga Villa Resik">
-                    <img class="gallery-slide lightbox-trigger" src="images/villa-resik/ruang-keluarga-atas-modern-minimalist.png" alt="Ruang keluarga Villa Resik">
-                    <img class="gallery-slide lightbox-trigger" src="images/villa-resik/kamar-tidur.png" alt="Kamar Villa Resik">
-                    <img class="gallery-slide lightbox-trigger" src="images/villa-resik/dapur-modern-minimalist.png" alt="Dapur Villa Resik">
-                    <img class="gallery-slide lightbox-trigger" src="images/villa-resik/toilet.png" alt="Tampak toilet Villa Resik">
+                    <img loading="lazy" class="gallery-slide lightbox-trigger" src="images/villa-resik/tampak-depan-rumah.png" alt="Tampak depan Villa Resik">
+                    <img loading="lazy" class="gallery-slide lightbox-trigger" src="images/villa-resik/ruang-tamu-modern-minimalist-bawah-tangga.png" alt="Ruang keluarga Villa Resik">
+                    <img loading="lazy" class="gallery-slide lightbox-trigger" src="images/villa-resik/ruang-keluarga-atas-modern-minimalist.png" alt="Ruang keluarga Villa Resik">
+                    <img loading="lazy" class="gallery-slide lightbox-trigger" src="images/villa-resik/kamar-tidur.png" alt="Kamar Villa Resik">
+                    <img loading="lazy" class="gallery-slide lightbox-trigger" src="images/villa-resik/dapur-modern-minimalist.png" alt="Dapur Villa Resik">
+                    <img loading="lazy" class="gallery-slide lightbox-trigger" src="images/villa-resik/toilet.png" alt="Tampak toilet Villa Resik">
                 </div>
                 <button class="gallery-button previous" type="button" aria-label="Foto sebelumnya">&#8249;</button>
                 <button class="gallery-button next" type="button" aria-label="Foto berikutnya">&#8250;</button>
@@ -135,7 +135,7 @@
         <button class="lightbox-prev" id="lightbox-prev" aria-label="Previous image">&#10094;</button>
         <div class="lightbox-content">
             
-            <img class="lightbox-img" id="lightbox-img" src="" alt="Enlarged view">
+            <img loading="lazy" class="lightbox-img" id="lightbox-img" src="" alt="Enlarged view">
         </div>
         <button class="lightbox-next" id="lightbox-next" aria-label="Next image">&#10095;</button>
     </div>
@@ -247,5 +247,85 @@
         });
     </script>
 
+
+    
+    <!-- Scroll to Top Button -->
+    <a href="#" class="scroll-to-top" id="scrollToTop" aria-label="Kembali ke atas">
+        &#8593;
+    </a>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const btn = document.getElementById('scrollToTop');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    btn.classList.add('visible');
+                } else {
+                    btn.classList.remove('visible');
+                }
+            });
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+    </script>
+
+    
+    <!-- Active Nav Script -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+            const navLinks = document.querySelectorAll('.nav-links a:not(.nav-cta)');
+            
+            // For subpages (not index.html), just highlight the matching href
+            if (currentPath !== 'index.html' && currentPath !== '') {
+                navLinks.forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (href && href.includes(currentPath)) {
+                        link.classList.add('active-link');
+                    }
+                });
+                return;
+            }
+
+            // For index.html, use IntersectionObserver to spy on sections
+            const sections = document.querySelectorAll('header, section');
+            const observer = new IntersectionObserver((entries) => {
+                let currentSection = '';
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        currentSection = entry.target.getAttribute('id');
+                    }
+                });
+                
+                if (currentSection) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('active-link');
+                        const href = link.getAttribute('href');
+                        if (href && href.includes('#' + currentSection)) {
+                            link.classList.add('active-link');
+                        }
+                    });
+                }
+            }, { rootMargin: '-30% 0px -70% 0px' });
+
+            sections.forEach(section => {
+                if (section.getAttribute('id')) observer.observe(section);
+            });
+        });
+    </script>
+
+    <!-- Scroll Position Retention -->
+    <script>
+        window.addEventListener('beforeunload', () => {
+            sessionStorage.setItem('scrollPos_' + window.location.pathname, window.scrollY);
+        });
+        window.addEventListener('load', () => {
+            const savedScroll = sessionStorage.getItem('scrollPos_' + window.location.pathname);
+            if (savedScroll !== null) {
+                window.scrollTo(0, parseInt(savedScroll, 10));
+            }
+        });
+    </script>
 </body>
 </html>

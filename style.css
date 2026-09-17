@@ -1118,3 +1118,63 @@ footer {
 .lightbox-trigger {
     cursor: zoom-in !important;
 }
+
+
+/* --- Scroll to Top Button --- */
+.scroll-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: var(--gold);
+    color: var(--green-deep);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    cursor: pointer;
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+.scroll-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+.scroll-to-top:hover {
+    background: #ffffff;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+}
+@media (max-width: 768px) {
+    .scroll-to-top {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+        font-size: 1.2rem;
+    }
+}
+
+
+/* --- Active Nav Link --- */
+.nav-links a.active-link {
+    color: var(--gold);
+    font-weight: 600;
+}
+.nav-links a.active-link::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--gold);
+    margin-top: 4px;
+    border-radius: 2px;
+}
